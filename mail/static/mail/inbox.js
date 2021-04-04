@@ -20,6 +20,42 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+
+  document.querySelector("#compose-form").addEventListener("submit", submitHandler);
+
+}
+
+function submitHandler(ev) {
+  console.log("submit button was pressed");
+  // Get data from form:
+  const recipients = document.querySelector("#compose-recipients").value;
+  console.log(recipients);
+  const subject = document.querySelector("#compose-subject").value;
+  console.log(subject);
+  const body = document.querySelector("#compose-body").value;
+  console.log(body);
+
+
+  // Validate data
+
+  // Make request to server
+    // fetch('/emails', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //       recipients: 'user@hogwarts.ac.uk',
+    //       subject: 'Test mail #',
+    //       body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae velit recusandae aperiam nostrum sequi mollitia exercitationem natus ex ullam placeat!'
+    //   })
+    // })
+    // .then(response => response.json())
+    // .then(result => {
+    //     // Print result
+    //     console.log(result);
+    // });
+  // alert("submit button pressed!");
+  // Disable default submit behavior
+  ev.preventDefault();
+  return false;
 }
 
 function load_mailbox(mailbox) {
