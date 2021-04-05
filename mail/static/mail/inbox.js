@@ -141,6 +141,14 @@ function clickEmailHandler(ev) {
 
       // Load email content on #mail_view
       load_mail(email);
+
+      // Mark email as read
+      fetch('/emails/' + email_id, {
+        method: 'PUT',
+        body: JSON.stringify({
+            read: true
+        })
+      })
   });
 }
 
