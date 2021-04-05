@@ -20,17 +20,21 @@ function swap_view(view) {
   });
 }
 
-function compose_email() {
+function compose_email(ev, email) {
 
   // Show compose view and hide other views
   swap_view('#compose-view');
 
   // Clear out composition fields
-  document.querySelector('#compose-recipients').value = '';
-  document.querySelector('#compose-subject').value = '';
-  document.querySelector('#compose-body').value = '';
+  // document.querySelector('#compose-recipients').value = '';
+  // document.querySelector('#compose-subject').value = '';
+  // document.querySelector('#compose-body').value = '';
 
-  document.querySelector("#compose-form").addEventListener("submit", submitHandler);
+  // document.querySelector("#compose-form").addEventListener("submit", submitHandler);
+  document.querySelector("#compose-form").reset();
+
+  console.log(email);
+
 
 }
 
@@ -197,6 +201,7 @@ function clickBtnHandler(ev) {
 
 // Your application should show the email’s sender, recipients, subject, timestamp, and body.
 function load_mail(email) {
+  // debugger;
   swap_view('#mail-view');
 
   // Save #emails-view node ref
@@ -230,16 +235,23 @@ function load_mail(email) {
   
   btn.innerText = "Reply";
   btn.value = "reply"; 
-  btn.classList.add("btn","btn-sm", "btn-outline-primary");    
-  btn.addEventListener("click", clickReplyHandler);        
+  btn.classList.add("btn","btn-sm", "btn-outline-primary"); 
+  const wrapper =  (ev) =>  { 
+    // debugger;
+    btn.removeEventListener("click", wrapper)
+    compose_email(ev, email);
+  }
+  btn.addEventListener("click", wrapper);        
   
   // row.append(row);
   mail_view.append(btn);
 }
 
-function clickReplyHandler(ev) {
-  console.log("trying to reply...");
-}
+// function clickReplyHandler(ev, mail) {
+//   // debugger;
+//   // console.log(mail);
+//   compose_email(mail);
+// }
 
 // {
 //   "id": 100,
