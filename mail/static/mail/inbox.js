@@ -98,7 +98,8 @@ function submitHandler(ev) {
         // Add desired fields to shown
         ["sender", "subject", "timestamp"].forEach((e) => {
           const item = document.createElement("span");
-          item.innerHTML = email[e];
+          // item.innerHTML = email[e];
+          item.innerHTML = `\t${email[e]}\t|`
           row.append(item);
         });
         
