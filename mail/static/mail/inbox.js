@@ -30,12 +30,19 @@ function compose_email(ev, email) {
   // document.querySelector('#compose-subject').value = '';
   // document.querySelector('#compose-body').value = '';
 
-  // document.querySelector("#compose-form").addEventListener("submit", submitHandler);
-  document.querySelector("#compose-form").reset();
-
-  console.log(email);
-
-
+  if (!email) {
+    document.querySelector("#compose-form").reset();
+  } else {
+    // console.log(email);
+    document.querySelector('#compose-recipients').value = email.sender;
+    document.querySelector('#compose-subject').value =
+    (email.subject.match(/^Re: /) ? "" : "Re: ") + email.subject;
+    // console.log(email.subject.match(/^Re: /));
+    document.querySelector('#compose-body').value = 
+    `On ${email.timestamp} ${email.sender} wrote:\n${email.body}`;
+  }
+  
+  document.querySelector("#compose-form").addEventListener("submit", submitHandler);
 }
 
 function submitHandler(ev) {
@@ -68,7 +75,7 @@ function submitHandler(ev) {
     })
     .then(result => {
         // Print result
-        console.log(result);
+        // console.log(result);
         load_mailbox('sent');
     });
 
@@ -178,10 +185,10 @@ function clickEmailHandler(ev) {
 function clickBtnHandler(ev) {
 
   const action = ev.currentTarget.value;
-  console.log(action);
+  // console.log(action);
   
   const email_id = ev.currentTarget.parentNode.id.split("-").pop();
-  console.log(email_id);
+  // console.log(email_id);
   
   // Decide what to do with the status
   const setArchived = (action === "archive") ? true : false;
@@ -237,7 +244,6 @@ function load_mail(email) {
   btn.value = "reply"; 
   btn.classList.add("btn","btn-sm", "btn-outline-primary"); 
   const wrapper =  (ev) =>  { 
-    // debugger;
     btn.removeEventListener("click", wrapper)
     compose_email(ev, email);
   }
@@ -246,12 +252,6 @@ function load_mail(email) {
   // row.append(row);
   mail_view.append(btn);
 }
-
-// function clickReplyHandler(ev, mail) {
-//   // debugger;
-//   // console.log(mail);
-//   compose_email(mail);
-// }
 
 // {
 //   "id": 100,
