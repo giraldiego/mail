@@ -56,10 +56,16 @@ function submitHandler(ev) {
       method: 'POST',
       body: JSON.stringify(email)
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      } else
+        return response.json();    
+    })
     .then(result => {
         // Print result
         console.log(result);
+        load_mailbox('sent');
     });
 
     // Disable default submit behavior
