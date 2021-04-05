@@ -223,6 +223,20 @@ function load_mail(email) {
 
   mail_view.append(email_header, email_body);
 
+  // Add Reply button
+  
+  const btn = document.createElement("button");
+  
+  btn.innerText = "Reply";
+  btn.value = "reply";     
+  btn.addEventListener("click", clickReplyHandler);        
+  
+  // row.append(row);
+  mail_view.append(btn);
+}
+
+function clickReplyHandler(ev) {
+  console.log("trying to reply...");
 }
 
 // {
