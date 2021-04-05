@@ -82,8 +82,12 @@ function submitHandler(ev) {
   const emails_view = document.querySelector("#emails-view");
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  mailboxTitle = mailbox.charAt(0).toUpperCase() + mailbox.slice(1);
+  document.querySelector('#emails-view').innerHTML = `<h3>${mailboxTitle}</h3>`;
   
+  // Change page's title
+  document.querySelector("title").innerHTML = mailboxTitle;
+
   // Get emails from server
   fetch('/emails/' + mailbox)
   .then(response => response.json())
