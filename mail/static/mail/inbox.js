@@ -229,7 +229,8 @@ function load_mail(email) {
   const btn = document.createElement("button");
   
   btn.innerText = "Reply";
-  btn.value = "reply";     
+  btn.value = "reply"; 
+  btn.classList.add("btn","btn-sm", "btn-outline-primary");    
   btn.addEventListener("click", clickReplyHandler);        
   
   // row.append(row);
