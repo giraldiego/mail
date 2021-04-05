@@ -10,11 +10,20 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
+function swap_view(view) {
+
+  ['#emails-view', '#compose-view','#mail-view'].forEach( e =>{
+    if (e !== view)
+      document.querySelector(e).style.display = 'none';
+    else
+      document.querySelector(e).style.display = 'block';
+  });
+}
+
 function compose_email() {
 
   // Show compose view and hide other views
-  document.querySelector('#emails-view').style.display = 'none';
-  document.querySelector('#compose-view').style.display = 'block';
+  swap_view('#compose-view');
 
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
@@ -59,18 +68,16 @@ function submitHandler(ev) {
   }
   
   function load_mailbox(mailbox) {
-
-  // Save #emails-view node ref
-  const emails_view = document.querySelector("#emails-view");
   
   // Show the mailbox and hide other views
-  emails_view.style.display = 'block';
-  document.querySelector('#compose-view').style.display = 'none';
+  swap_view('#emails-view');
+  
+  // Save #emails-view node ref
+  const emails_view = document.querySelector("#emails-view");
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
   
-
   // Get emails from server
   fetch('/emails/' + mailbox)
   .then(response => response.json())
@@ -135,5 +142,16 @@ function clickEmailHandler(ev) {
       console.log(email);
 
       // ... do something else with email ...
+      load_mail(email);
   });
+}
+
+// Your application should show the email’s sender, recipients, subject, timestamp, and body.
+function load_mail(email) {
+  swap_view('#mail-view');
+
+  // Save #emails-view node ref
+  const mail_view = document.querySelector("#mail-view");
+  mail_view.innerHTML = email;
+
 }
