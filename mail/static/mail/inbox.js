@@ -83,7 +83,7 @@ function submitHandler(ev) {
   .then(response => response.json())
   .then(emails => {
       // Print emails
-      console.log(emails);
+      // console.log(emails);
 
       // Create parent container div
       const container = document.createElement("div");
@@ -92,6 +92,8 @@ function submitHandler(ev) {
 
         // Create email row div 
         const row = document.createElement("div");
+
+        // debugger;
 
         row.classList.add("email-item");
         if (!email.read) row.classList.add("email-item-unread");
@@ -103,19 +105,29 @@ function submitHandler(ev) {
           item.innerHTML = `\t${email[e]}\t|`
           row.append(item);
         });
-
-        // Add archive/unarchive button
-        const btn = document.createElement("button");
-        btn.innerText = "archive";
-        btn.value = "archive";
-        row.append(btn);
         
         row.id = "emailId-" + email.id;
-
+        
         row.addEventListener("click", clickEmailHandler);
-
+        
+        // Add archive/unarchive button
+        if (mailbox !== "sent") {
+          const btn = document.createElement("button");
+          if (mailbox === "inbox") {
+            btn.innerText = "archive";
+            btn.value = "archive"; 
+          } else if (mailbox === "archive") {
+            btn.innerText = "unarchive";
+            btn.value = "unarchive";
+          } 
+          btn.addEventListener("click", clickBtnHandler);        
+          
+          // row.append(row);
+          row.insertBefore(btn, row.firstChild);
+        } 
         // Add email row to parent container
         container.append(row);
+        
       });
 
       // Add list of emails to emails-view
@@ -124,19 +136,9 @@ function submitHandler(ev) {
 
 }
 
-// {
-//   "id": 100,
-//   "sender": "foo@example.com",
-//   "recipients": ["bar@example.com"],
-//   "subject": "Hello!",
-//   "body": "Hello, world!",
-//   "timestamp": "Jan 2 2020, 12:00 AM",
-//   "read": false,
-//   "archived": false
-// }
-
 function clickEmailHandler(ev) {
-  console.log(this.id);
+
+  // Get email id from div
   email_id = this.id.split("-").pop();
   // console.log(this.id.split("-").pop());
 
@@ -144,7 +146,7 @@ function clickEmailHandler(ev) {
   .then(response => response.json())
   .then(email => {
       // Print email
-      console.log(email);
+      // console.log(email);
 
       // Load email content on #mail_view
       load_mail(email);
@@ -157,6 +159,30 @@ function clickEmailHandler(ev) {
         })
       })
   });
+}
+
+function clickBtnHandler(ev) {
+
+  const action = ev.currentTarget.value;
+  console.log(action);
+  
+  const email_id = ev.currentTarget.parentNode.id.split("-").pop();
+  console.log(email_id);
+  
+  // Decide what to do with the status
+  const setArchived = (action === "archive") ? true : false;
+  
+  // Change archived status
+  fetch('/emails/' + email_id, {
+    method: 'PUT',
+    body: JSON.stringify({
+      archived: setArchived
+    })
+  })
+  .then(response => load_mailbox('inbox'));
+  
+  // Stop other handlers
+  ev.stopPropagation();
 }
 
 // Your application should show the email’s sender, recipients, subject, timestamp, and body.
@@ -188,3 +214,14 @@ function load_mail(email) {
   mail_view.append(email_header, email_body);
 
 }
+
+// {
+//   "id": 100,
+//   "sender": "foo@example.com",
+//   "recipients": ["bar@example.com"],
+//   "subject": "Hello!",
+//   "body": "Hello, world!",
+//   "timestamp": "Jan 2 2020, 12:00 AM",
+//   "read": false,
+//   "archived": false
+// }
