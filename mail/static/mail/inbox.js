@@ -152,6 +152,26 @@ function load_mail(email) {
 
   // Save #emails-view node ref
   const mail_view = document.querySelector("#mail-view");
-  mail_view.innerHTML = email;
+  mail_view.innerHTML = "";
+
+  const email_header = document.createElement("div");
+  email_header.classList.add("email-content-header", "pure-g");
+  email_header.innerHTML = 
+    `<div class="pure-u-1-2">
+      <h1 class="email-content-title">${email.subject}</h1>
+      <p class="email-content-subtitle">
+        From <a>${email.sender}</a> at <span>${email.timestamp}</span>
+      </p>
+      <p class="email-content-subtitle">
+        To: ${email.recipients}
+      </p>
+    </div>`
+
+    const email_body = document.createElement("div");
+    email_body.classList.add("email-content-body");
+    email_body.innerHTML = 
+      `<p>${email.body}</p>`
+
+  mail_view.append(email_header, email_body);
 
 }
