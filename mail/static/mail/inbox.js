@@ -93,7 +93,11 @@ function submitHandler(ev) {
           const item = document.createElement("span");
           item.innerHTML = email[e];
           row.append(item);
-        });   
+        });
+        
+        row.id = "emailId-" + email.id;
+
+        row.addEventListener("click", clickEmailHandler);
 
         // Add email row to parent container
         container.append(row);
@@ -118,3 +122,18 @@ function submitHandler(ev) {
 //   "read": false,
 //   "archived": false
 // }
+
+function clickEmailHandler(ev) {
+  console.log(this.id);
+  email_id = this.id.split("-").pop();
+  // console.log(this.id.split("-").pop());
+
+  fetch('/emails/' + email_id)
+  .then(response => response.json())
+  .then(email => {
+      // Print email
+      console.log(email);
+
+      // ... do something else with email ...
+  });
+}
