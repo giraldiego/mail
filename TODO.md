@@ -1,0 +1,1 @@
+- Add handling of errors when composing a new email.
