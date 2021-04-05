@@ -86,7 +86,7 @@ function submitHandler(ev) {
   document.querySelector('#emails-view').innerHTML = `<h3>${mailboxTitle}</h3>`;
   
   // Change page's title
-  document.querySelector("title").innerHTML = mailboxTitle;
+  // document.querySelector("title").innerHTML = mailboxTitle;
 
   // Get emails from server
   fetch('/emails/' + mailbox)
