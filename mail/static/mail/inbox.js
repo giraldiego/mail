@@ -204,16 +204,17 @@ function load_mail(email) {
   mail_view.innerHTML = "";
 
   const email_header = document.createElement("div");
-  email_header.classList.add("email-content-header", "pure-g");
+  email_header.classList.add("email-content-header");
   email_header.innerHTML = 
     `<div>
       <h1 class="email-content-title">${email.subject}</h1>
       <p class="email-content-subtitle">
-        From: ${email.sender} at <span>${email.timestamp}</span>
+        <b>From</b>: ${email.sender} <b>at</b> <span>${email.timestamp}</span>
       </p>
       <p class="email-content-subtitle">
-        To: ${email.recipients}
+      <b>To:</b> ${email.recipients}
       </p>
+      <hr>
     </div>`
 
     const email_body = document.createElement("div");
