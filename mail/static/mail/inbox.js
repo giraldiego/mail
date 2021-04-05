@@ -92,6 +92,7 @@ function submitHandler(ev) {
 
         // Create email row div 
         const row = document.createElement("div");
+
         row.classList.add("email-item");
         if (!email.read) row.classList.add("email-item-unread");
 
@@ -102,6 +103,12 @@ function submitHandler(ev) {
           item.innerHTML = `\t${email[e]}\t|`
           row.append(item);
         });
+
+        // Add archive/unarchive button
+        const btn = document.createElement("button");
+        btn.innerText = "archive";
+        btn.value = "archive";
+        row.append(btn);
         
         row.id = "emailId-" + email.id;
 

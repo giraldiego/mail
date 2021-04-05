@@ -8,6 +8,9 @@ textarea {
   border-left: 6px solid transparent; */
   background-color: grey;
   border: 2px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .email-item-unread {
