@@ -3,13 +3,13 @@ textarea {
 }
 /* Email Item Styles */
 .email-item {
-  padding: 0.9em 1em;
+  /* padding: 0.9em 1em;
   border-bottom: 1px solid #ddd;
-  border-left: 6px solid transparent;
-  /* background-color: grey; */
+  border-left: 6px solid transparent; */
+  background-color: grey;
 }
 
 .email-item-unread {
-  border-left: 6px solid #1b98f8;
-  /* background-color: white; */
+  /* border-left: 6px solid #1b98f8; */
+  background-color: white;
 }

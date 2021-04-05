@@ -112,9 +112,6 @@ function submitHandler(ev) {
 
       // Add list of emails to emails-view
       emails_view.append(container);
-
-      // Each email should then be rendered in its own box (e.g. as a <div> with a border) that displays who the email is from, what the subject line is, and the timestamp of the email.
-      // If the email is unread, it should appear with a white background. If the email has been read, it should appear with a gray background.
   });
 
 }
@@ -141,7 +138,7 @@ function clickEmailHandler(ev) {
       // Print email
       console.log(email);
 
-      // ... do something else with email ...
+      // Load email content on #mail_view
       load_mail(email);
   });
 }
@@ -157,10 +154,10 @@ function load_mail(email) {
   const email_header = document.createElement("div");
   email_header.classList.add("email-content-header", "pure-g");
   email_header.innerHTML = 
-    `<div class="pure-u-1-2">
+    `<div>
       <h1 class="email-content-title">${email.subject}</h1>
       <p class="email-content-subtitle">
-        From <a>${email.sender}</a> at <span>${email.timestamp}</span>
+        From: ${email.sender} at <span>${email.timestamp}</span>
       </p>
       <p class="email-content-subtitle">
         To: ${email.recipients}
