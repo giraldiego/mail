@@ -237,7 +237,6 @@ function load_mail(email) {
   mail_view.append(email_header, email_body);
 
   // Add Reply button
-  
   const btn = document.createElement("button");
   
   btn.innerText = "Reply";
@@ -249,8 +248,32 @@ function load_mail(email) {
   }
   btn.addEventListener("click", wrapper);        
   
-  // row.append(row);
   mail_view.append(btn);
+
+  // Add Archive/Unarchive button 
+  const btn2 = document.createElement("button");
+
+  if (email.archived === false ) {
+    btn2.innerText = "Archive";
+    btn2.value = "archive"; 
+  } else {
+    btn2.innerText = "Unarchive";
+    btn2.value = "unarchive"; 
+  }
+  
+  btn2.classList.add("btn","btn-sm", "btn-outline-primary"); 
+  
+  btn2.addEventListener("click", (ev) => {
+    fetch('/emails/' + email_id, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: !email.archived
+      })
+    })
+    .then(response => load_mailbox('inbox'));
+  });        
+  
+  mail_view.append(btn2);
 }
 
 // {
